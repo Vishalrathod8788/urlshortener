@@ -1,13 +1,21 @@
 {
-  "name": "project",
+  "name": "urlshortener",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "dev" : "node --watch app.js",
     "start": "node app.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vishalrathod8788/urlshortener.git"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "bugs": {
+    "url": "https://github.com/Vishalrathod8788/urlshortener/issues"
+  },
+  "homepage": "https://github.com/Vishalrathod8788/urlshortener#readme"
 }
