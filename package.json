@@ -4,8 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev" : "node --watch app.js",
-    "start": "node app.js"
+    "dev" : "node --watch index.js",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
