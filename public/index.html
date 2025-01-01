@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style.css" />
+    <title>URL Shortener</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>URL Shortener</h1>
+      <form id="shorten-form">
+        <label for="url">Enter your URL:</label>
+        <input
+          type="url"
+          name="url"
+          id="url"
+          placeholder="Enter your URL here"
+          required
+        />
+        <label for="short-url">Short Code :</label>
+        <input
+          type="text"
+          name="shortCode"
+          id="shortCode"
+          placeholder="Enter your short code here"
+        />
+        <button type="submit">Shorten</button>
+        <h2>Shortened URLs</h2>
+        <ul id="shortened-urls"></ul>
+      </form>
+    </div>
+
+    <script>
+      const shortenedUrlsList = document.getElementById("shortened-urls");
+
+      const displayLinks = (links) => {
+        shortenedUrlsList.innerHTML = "";
+        Object.entries(links).forEach(([shortCode, originalUrl]) => {
+          const li = document.createElement("li");
+          const shortUrl = `${window.location.origin}/${shortCode}`;
+          li.innerHTML = `
+            <div>
+              <strong>Short URL:</strong> <a href="${shortUrl}" target="_blank">${shortUrl}</a><br>
+              <strong>Original URL:</strong> <a href="${originalUrl}" target="_blank">${originalUrl}</a>
+            </div>
+          `;
+          shortenedUrlsList.appendChild(li);
+        });
+      };
+
+      const fetchShortenedUrls = async () => {
+        try {
+          const response = await fetch("http://localhost:5000/links");
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          const links = await response.json();
+          displayLinks(links);
+        } catch (error) {
+          console.error("Error fetching shortened URLs:", error.message);
+          shortenedUrlsList.innerHTML =
+            '<li class="error">Error loading shortened URLs</li>';
+        }
+      };
+
+      document
+        .getElementById("shorten-form")
+        .addEventListener("submit", async (event) => {
+          event.preventDefault();
+          const formData = new FormData(event.target);
+          const url = formData.get("url");
+          const shortCode = formData.get("shortCode");
+
+          try {
+            const response = await fetch("/shorten", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ url, shortCode }),
+            });
+
+            if (!response.ok) {
+              const data = await response.json();
+              throw new Error(data.error || "Failed to shorten URL");
+            }
+
+            const result = await response.json();
+            event.target.reset();
+            fetchShortenedUrls();
+            alert("URL shortened successfully!");
+          } catch (error) {
+            alert(error.message);
+          }
+        });
+
+      // Initial fetch of shortened URLs
+      fetchShortenedUrls();
+    </script>
+  </body>
+</html>
