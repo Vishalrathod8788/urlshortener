@@ -23,19 +23,38 @@ const loadLink = async () => {
             }
             return JSON.parse(data);
         } catch (error) {
-            
+            if (error.code === "ENOENT") {
+                // If file doesn't exist, create it with empty object
+                await fs.writeFile(DATA_FILE, JSON.stringify({}));
+                return {};
+            }
+            // If JSON parse error, reinitialize the file
+            if (error instanceof SyntaxError) {
+                await fs.writeFile(DATA_FILE, JSON.stringify({}));
+                return {};
+            }
+            throw error;
         }
     } catch (error) {
         
     }
 }
 
-const saveLink = async () => {
-
+const saveLink = async (links) => {
+    try {
+        const data = await fs.writeFile(DATA_FILE, JSON.stringify(links, null, 2));
+    } catch (error) {
+        console.error("Error saving links:", error);
+    }
 }
 
 app.get("/", (req, res) => {
-    const file = path.join("views", "index.html");
+    try {
+        const file = fs.readFile(path.join("views", "index.html"));
+        const links = loadLink();
+    } catch (error) {
+        return res.status(500).send("Error loading index.html");
+    }
 });
 
 app.listen(PORT, () => {
