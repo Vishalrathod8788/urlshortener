@@ -8,6 +8,7 @@ const DATA_FILE = path.join("data", "links.json");
 console.log(DATA_FILE);
 
 const app = express();
+app.use(express.static("public"));
 
 const loadLink = async () => {
     try {
@@ -34,7 +35,7 @@ const saveLink = async () => {
 }
 
 app.get("/", (req, res) => {
-    res.send("Hello World!");
+    const file = path.join("views", "index.html");
 });
 
 app.listen(PORT, () => {
