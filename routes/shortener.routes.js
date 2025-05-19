@@ -83,3 +83,5 @@ router.get("/:shortCode", async (req, res) => {
     return res.status(404).send("404 Page Not Found");
   }
 });
+
+export default router;
