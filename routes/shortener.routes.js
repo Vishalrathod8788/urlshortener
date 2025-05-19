@@ -1,5 +1,9 @@
 import path from "path";
+import fs from "fs";
+import crypto from "crypto";
+import { Router } from "express";
 
+const router = Router();
 const DATA_FILE = path.join("data", "links.json");
 // Load links from file
 const loadLinks = async () => {
@@ -36,13 +40,13 @@ const saveLinks = async (links) => {
 };
 
 // GET /links - return all links
-app.get("/links", async (req, res) => {
+router.get("/links", async (req, res) => {
   const links = await loadLinks();
   res.json(links);
 });
 
 // POST /shorten - create a new short URL
-app.post("/shorten", async (req, res) => {
+router.post("/shorten", async (req, res) => {
   try {
     const { url, shortCode } = req.body;
     if (!url) {
@@ -69,7 +73,7 @@ app.post("/shorten", async (req, res) => {
 });
 
 // Redirect to original URL
-app.get("/:shortCode", async (req, res) => {
+router.get("/:shortCode", async (req, res) => {
   const links = await loadLinks();
   const { shortCode } = req.params;
 
