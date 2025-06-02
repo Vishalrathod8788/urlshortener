@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import router from "./routes/shortener.routes.js";
+import { shortenerRouter } from "./routes/shortener.routes.js";
 
 const app = express();
 const PORT = 5000;
@@ -11,7 +11,7 @@ app.use(express.json()); // Parse JSON bodies
 app.use(express.static("public")); // Serve static files
 
 // Routes
-app.use(router);
+app.use(shortenerRouter);
 
 // Start server
 app.listen(PORT, () => {

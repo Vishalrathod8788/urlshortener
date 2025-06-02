@@ -1,5 +1,5 @@
 import path from "path";
-import fs from "fs";
+import fs from "fs/promises";
 import crypto from "crypto";
 import { Router } from "express";
 
@@ -84,4 +84,9 @@ router.get("/:shortCode", async (req, res) => {
   }
 });
 
-export default router;
+//Default export
+// export default router;
+
+//Named export
+const shortenerRouter = router;
+export { shortenerRouter };
