@@ -5,6 +5,7 @@ import { Router } from "express";
 
 const router = Router();
 const DATA_FILE = path.join("data", "links.json");
+
 // Load links from file
 const loadLinks = async () => {
   try {
@@ -84,7 +85,7 @@ router.get("/:shortCode", async (req, res) => {
   }
 });
 
-//Default export
+// --> Default export
 // export default router;
 
 //Named export
