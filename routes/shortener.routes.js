@@ -52,7 +52,8 @@ router.use("/report", (req, res) => {
   {name: "Ethan", grade: "B-", favoriteSubject: "Chemistry"},
   {name: "Fiona", grade: "A", favoriteSubject: "Art"},
 ]
-  res.render("report", {student});
+  // res.render("report", {student});
+  res.render('report', { student: student });
 });
 
 // GET /links - return all links

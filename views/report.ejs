@@ -12,13 +12,14 @@
     <p>Favorite Subject: <%= student.favoriteSubject %></p>
 
     <h2>All Student Data</h2>
-    <% students.forEach(function(student) { %>
-        <div>
-            <p><strong>Student: <%= index + 1 %></strong></p>
-            <p>Name: <%= stu.name %></p>
-            <p>Grade: <%= stu.grade %></p>
-            <p>Favorite Subject: <%= stu.favoriteSubject %></p>
+    <% student.forEach(function(stu, index) { %>
+        <div style="display: grid;">
+            <li><strong>Student: <%= index + 1 %></strong></li>
+            <li>Name: <%= stu.name %></li>
+            <li>Grade: <%= stu.grade %></li>
+            <li>Favorite Subject: <%= stu.favoriteSubject %></li>
         </div>
+        <br>
     <% }) %>
 </body>
 </html>
