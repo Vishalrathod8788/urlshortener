@@ -40,6 +40,21 @@ const saveLinks = async (links) => {
   }
 };
 
+// Serve the Ejs file for the report page
+router.use("/report", (req, res) => {
+  const student = [
+  {name: "Vishal", grade: "A", favoriteSubject: "Computer Science" },
+  {name: "John", grade: "B", favoriteSubject: "English"},
+  {name: "Alice", grade: "A+", favoriteSubject: "Mathematics"},
+  {name: "Bob", grade: "C", favoriteSubject: "History"},
+  {name: "Charlie", grade: "B+", favoriteSubject: "Physics"},
+  {name: "Diana", grade: "A", favoriteSubject: "Biology"},
+  {name: "Ethan", grade: "B-", favoriteSubject: "Chemistry"},
+  {name: "Fiona", grade: "A", favoriteSubject: "Art"},
+]
+  res.render("report", {student});
+});
+
 // GET /links - return all links
 router.get("/links", async (req, res) => {
   const links = await loadLinks();
