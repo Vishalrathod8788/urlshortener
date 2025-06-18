@@ -6,20 +6,25 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Student Report Card</h1>
-    <p>Name: <%= student.name %></p>
-    <p>Grade: <%= student.grade %></p>
-    <p>Favorite Subject: <%= student.favoriteSubject %></p>
 
-    <h2>All Student Data</h2>
-    <% student.forEach(function(stu, index) { %>
-        <div style="display: grid;">
-            <li><strong>Student: <%= index + 1 %></strong></li>
-            <li>Name: <%= stu.name %></li>
-            <li>Grade: <%= stu.grade %></li>
-            <li>Favorite Subject: <%= stu.favoriteSubject %></li>
-        </div>
-        <br>
-    <% }) %>
+    <%- include('header') %>
+
+    <section class="reposrt-section">
+        <h1>Student Report Card</h1>
+        <p>Name: <%= student.name %></p>
+        <p>Grade: <%= student.grade %></p>
+        <p>Favorite Subject: <%= student.favoriteSubject %></p>
+
+        <h2>All Student Data</h2>
+        <% student.forEach(function(stu, index) { %>
+            <div style="display: grid;">
+                <li><strong>Student: <%= index + 1 %></strong></li>
+                <li>Name: <%= stu.name %></li>
+                <li>Grade: <%= stu.grade %></li>
+                <li>Favorite Subject: <%= stu.favoriteSubject %></li>
+            </div>
+            <br>
+        <% }) %>
+    </section>
 </body>
 </html>
