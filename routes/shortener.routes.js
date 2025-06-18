@@ -63,7 +63,7 @@ router.get("/links", async (req, res) => {
 });
 
 // POST /shorten - create a new short URL
-postURLshorten(loadLinks, saveLinks);
+router.post("/shorten", postURLshorten(loadLinks, saveLinks));
 
 // router.post("/shorten", async (req, res) => {
 //   try {
