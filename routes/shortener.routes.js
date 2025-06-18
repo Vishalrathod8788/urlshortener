@@ -1,7 +1,7 @@
 import path from "path";
 import fs from "fs/promises";
-import crypto from "crypto";
 import { Router } from "express";
+import { postURLshorten } from "../controller/postshortener.controller.js";
 
 const router = Router();
 const DATA_FILE = path.join("data", "links.json");
@@ -58,36 +58,38 @@ router.use("/report", (req, res) => {
 
 // GET /links - return all links
 router.get("/links", async (req, res) => {
-  const links = await loadLinks();
+  const links = await loadLinks();  
   res.json(links);
 });
 
 // POST /shorten - create a new short URL
-router.post("/shorten", async (req, res) => {
-  try {
-    const { url, shortCode } = req.body;
-    if (!url) {
-      return res.status(400).json({ error: "URL is required" });
-    }
+postURLshorten(loadLinks, saveLinks);
 
-    const links = await loadLinks();
-    const finalShortCode = shortCode || crypto.randomBytes(3).toString("hex");
+// router.post("/shorten", async (req, res) => {
+//   try {
+//     const { url, shortCode } = req.body;
+//     if (!url) {
+//       return res.status(400).json({ error: "URL is required" });
+//     }
 
-    if (links[finalShortCode]) {
-      return res.status(400).json({
-        error: "Shortcode already exists, please choose another one",
-      });
-    }
+//     const links = await loadLinks();
+//     const finalShortCode = shortCode || crypto.randomBytes(3).toString("hex");
 
-    links[finalShortCode] = url;
-    await saveLinks(links);
+//     if (links[finalShortCode]) {
+//       return res.status(400).json({
+//         error: "Shortcode already exists, please choose another one",
+//       });
+//     }
 
-    res.json({ shortUrl: `/${finalShortCode}` });
-  } catch (error) {
-    console.error("Error in /shorten:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
+//     links[finalShortCode] = url;
+//     await saveLinks(links);
+
+//     res.json({ shortUrl: `/${finalShortCode}` });
+//   } catch (error) {
+//     console.error("Error in /shorten:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// });
 
 // Redirect to original URL
 router.get("/:shortCode", async (req, res) => {
