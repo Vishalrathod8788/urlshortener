@@ -1,6 +1,7 @@
 import crypto from "crypto";
+import { loadLinks, saveLinks } from "../models/shortener.model.js";
 
-export const getURLredirect = (loadLinks) => async (req, res) => {
+export const getURLredirect = async (req, res) => {
   const links = await loadLinks();
   const { shortCode } = req.params;
 
@@ -11,7 +12,7 @@ export const getURLredirect = (loadLinks) => async (req, res) => {
   }
 }
 
-export const postURLshorten = (loadLinks, saveLinks) => async (req, res) => {
+export const postURLshorten = async (req, res) => {
   try {
     const { url, shortCode } = req.body;
     if (!url) {

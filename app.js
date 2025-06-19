@@ -10,7 +10,6 @@ app.use(cors());
 app.use(express.json()); // Parse JSON bodies
 app.use(express.static("public")); // Serve static files
 app.set("view engine", "ejs"); // Set EJS as the view engine 
-app.set("views", "views"); // Set the views directory
 
 // Routes
 app.use(shortenerRouter);
