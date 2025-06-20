@@ -4,11 +4,6 @@ import { postURLshorten } from "../controller/postshortener.controller.js";
 
 const router = Router();
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'index.html'));
-});
-
-
 // POST /shorten - create a new short URL
 router.post("/shorten", postURLshorten);
 
